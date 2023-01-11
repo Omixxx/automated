@@ -3,7 +3,11 @@ import os
 import subprocess
 import sys
 
-GET_LOGS = "git log --pretty=format:\"hash:'%h' commit_message:'%s' auth_name:'%an' auth_email:'%ae'\""
+GET_LOGS = 'git log --pretty=format:"%h, %s, %an ,%ae"'
+HASH_LINE_INDEX = 0
+GIT_LOG_LINE_INDEX = 1
+AUTHOR_LINE_INDEX = 2
+AUTHOR_EMAIL_LINE_INDEX = 3
 
 
 def generate_logs(repo_path):
@@ -30,10 +34,14 @@ def is_valid_repo(repo_path) -> bool:
     return True
 
 
-def main(logs):
+def main(logs, repo_path):
 
     for line in logs:
-        print(f'\n\n---> {line}')
+        my_line = str(line).split(',')
+
+        js = {
+            'repo_name': f'{repo_path},"fix_commit_hash": f"{my_line[HASH_LINE_INDEX]} '
+        }
 
     print('fine')
 
@@ -42,11 +50,13 @@ if __name__ == '__main__':
     assert which('git') is not None, 'git is not installed'
 
     if len(sys.argv) != 2:
-        print('Usage: "python3 name of the program [path_of_the_repository]"')
+        print(
+            'Usage: "python3 pyszz_json_generator [path_of_the_repository] "'
+        )
         sys.exit(-1)
 
     REPO_PATH = str(sys.argv[1])
     if not is_valid_repo(REPO_PATH):
         sys.exit(1)
 
-    main(generate_logs(REPO_PATH))
+    main(generate_logs(REPO_PATH), REPO_PATH)
