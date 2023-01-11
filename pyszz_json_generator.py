@@ -3,6 +3,7 @@ import os
 import subprocess
 import sys
 
+KEYWORDS = ['CVE', 'fix security', 'security']
 GET_LOGS = 'git log --pretty=format:"%h, %s, %an ,%ae"'
 HASH_LINE_INDEX = 0
 GIT_LOG_LINE_INDEX = 1
@@ -34,16 +35,30 @@ def is_valid_repo(repo_path) -> bool:
     return True
 
 
-def main(logs, repo_path):
+def contains(line):
 
-    for line in logs:
+    for key in KEYWORDS:
+        return key in str(line)
+
+
+def main(logs, repo_path):
+    assert logs is not None
+
+    filtered_logs = list(filter(contains, logs))
+    output_json = list()
+
+    for line in filtered_logs:
         my_line = str(line).split(',')
 
-        js = {
-            'repo_name': f'{repo_path},"fix_commit_hash": f"{my_line[HASH_LINE_INDEX]} '
-        }
+        output_json.append(
+            {
+                'repo_name': f'{repo_path},"fix_commit_hash": f"{my_line[HASH_LINE_INDEX]}'
+            }
+        )
 
-    print('fine')
+    subprocess.run(
+        ['powershell.exe', f'cat {output_json} > security_buf_fix.json']
+    )
 
 
 if __name__ == '__main__':
