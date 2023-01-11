@@ -2,6 +2,7 @@ from shutil import which
 import os
 import subprocess
 import sys
+import json
 
 KEYWORDS = ['CVE', 'fix security', 'security']
 GET_LOGS = 'git log --pretty=format:"%h, %s, %an ,%ae"'
@@ -45,20 +46,20 @@ def main(logs, repo_path):
     assert logs is not None
 
     filtered_logs = list(filter(contains, logs))
-    output_json = list()
+    output = list([])
 
     for line in filtered_logs:
         my_line = str(line).split(',')
 
-        output_json.append(
+        output.append(
             {
                 'repo_name': f'{repo_path},"fix_commit_hash": f"{my_line[HASH_LINE_INDEX]}'
             }
         )
+    json_str = json.dumps(output, indent=4)
 
-    subprocess.run(
-        ['powershell.exe', f'cat {output_json} > security_buf_fix.json']
-    )
+    with open('data.json', 'w') as f:
+        f.write(json_str)
 
 
 if __name__ == '__main__':
