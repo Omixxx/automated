@@ -1,0 +1,287 @@
+[
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "d6251d1cfb",
+        "message": " Fix CVE-2022-34305 XSS in the examples web application"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "400fe18247",
+        "message": " Add reference to CVE-2019-10072"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "b860700fa5",
+        "message": " Add reference to CVE-2019-0221"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "4c04369c28",
+        "message": " Add some comments for the fix for CVE-2018-8037"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "95d19f558e",
+        "message": " Update docs after changes for CVE-2018-8014"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "d83a76732e",
+        "message": " Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=62343 Make CORS filter defaults more secure. This is the fix for CVE-2018-8014."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "b7e0435d17",
+        "message": " Partial fix for CVE-2017-12617 This ensures that a path specified for creation of a file does not end in '/' since that is dropped by the File API."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "b577f9a799",
+        "message": " Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=61542 Partial fix for CVE-2017-12617 This moves a check from the Default servlet where it applied to GET"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "17449ac617",
+        "message": " Now CVE-2017-7675 is public"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "fb3569fbb9",
+        "message": " Add a new initialisation parameter"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "0b41baf750",
+        "message": " Add some info and disable the async test (one CVE saved hehe)."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "1033b8ddf8",
+        "message": " Add CVE numbers"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "29384723d8",
+        "message": " Fix CVE-2014-0050 DoS with malformed Content-Type header and multipart request processing. Update to latest code (r1565159) from Commons FileUpload"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "150bc791ac",
+        "message": " Expand UTF-8 tests based on a test case written by Joe Orton for CVE-2008-2938 Note the additional failures this generates are not exploitable. They are invalid only because they encode a valid code point in too many bytes."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "0c5ec5b958",
+        "message": " - Align %2f handling (aka CVE-2007-0450 fix) between implementations of UDecoder.convert(). - Make convert(MessageBytes) to consistently throw an IOException"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "a2538ce78f",
+        "message": " Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=51698 Fix CVE-2011-3190 Prevent AJP request forgery via unread request body packet"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "b139f0fca0",
+        "message": " Update to daemon 1.0.7 This fixes CVE-2011-2729"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "b2db47642c",
+        "message": " Add CVE reference for sendfile issues"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "2e69497fa7",
+        "message": " When running under a security manager and using sendfile"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "1d372c881e",
+        "message": " Protect against crashes in the HTTP APR connector if sendfile is configured to send more data than is available in the file. Part of the fix for CVE-2011-2526"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "48dded4ab1",
+        "message": " Socket has been closed"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "163e03c7eb",
+        "message": " Correct a comment Part of the fix for CVE-2011-2526"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "ff8789737a",
+        "message": " Protect against infinite loops in the HTTP NIO connector if sendfile is configured to send more data than is available in the file. (markt) Part of the fix for CVE-2011-2526"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "763a56b459",
+        "message": " Fix CVE-2011-2204. Prevent user passwords appearing in log files if a runtime exception (e.g. OOME) occurs while creating a new user for a MemoryUserDatabase via JMX."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "81bb49ad58",
+        "message": " Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=51395 Better fix for memory leak that aligns ContextConfig with TldConfig Fix part 3 of 3 for CVE-2011-2481"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "279e4451cb",
+        "message": " Revert r1137753 - I have a better soution in mind Fix part 2 of 3 for CVE-2011-2481"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "8fa210147f",
+        "message": " Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=51395 Fix memory leak triggered when an application that includes a SAXParserFactory is the first web application to be loaded. Fix part 1 of 3 for CVE-2011-2481"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "299b26af66",
+        "message": " Use the correct classloader This is the fix for CVE-2011-1582"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "639e20992a",
+        "message": " Add additional configuration options to the DIGEST authenticator This is the fix for CVE-2011-1184"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "b7b5c63a93",
+        "message": " Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=12428 Add optional support for preemptive authentication on a per context basis Based on a patch suggested by Werner Donn This includes the fix for CVE-2011-1183"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "fd8a579e0e",
+        "message": " Protect against things going wrong during access logging. An un-handled exception here could trigger some unexpected code paths. Possible contributing factor to https://issues.apache.org/bugzilla/show_bug.cgi?id=50957 ? This is part of the fix for CVE-2011-1475"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "d2e8f2ede7",
+        "message": " Move the processor.recycle calls to just before the point where the processor is returned to the pool. This ensures returned processors are recycled (this could have been skipped on some exception paths) Possible contributing factor to https://issues.apache.org/bugzilla/show_bug.cgi?id=50957 ? This is part of the fix for CVE-2011-1475"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "3e5b045548",
+        "message": " CVE-2011-1088 Fix unit test failures"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "0ff4905158",
+        "message": " CVE-2011-1088 Complete the fix for this issue. The optimisation not to configure an authenticator of there were no security constraints meant that in that case @ServletSecurity annotations had no effect. The unit tests did not pick this up since they added an authenticator directly. Add an explicit unit test for this scenario."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "54e58c0cd5",
+        "message": " Add the CVE info for 7.0.10"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "ece65c1a42",
+        "message": " CVE-2011-1088 @ServletSecurity Servlets added via addServlet() should not be processed unless created via craeteServlet. Need to delay scanning until urlPatterns are known"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "2d7dbfe4c6",
+        "message": " CVE-2011-1088 Fix typo"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "5c8560f305",
+        "message": " CVE-2011-1088 Start of fix for issue reported on users list that @ServletSecurity annotations were ignored. This fix is not yet complete. This first part: - Triggers the loading of the Wrapper before the constraints are processed to ensure that any @ServletSecurity annotations are taken account of - Makes sure the constraints collection is thread-safe given new usage - Adds scanning for @ServletSecurity when a Servlet is loaded - Ensure there is always an authenticator when using the embedded Tomcat class so that @ServletSecurity will have an effect - Adds a simple unit test to check @ServletSecurity annotations are processed Further commits will add additional test cases and any changes required for those test cases to pass"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "407841c426",
+        "message": " Improve HTTP specification compliance This works-around the Oracle JVM bug that triggers a DoS. CVE-2010-4476."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "008447095c",
+        "message": " Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=50631 InternalNioInputBuffer should honor maxHttpHeadSize This addresses CVE-2011-0534"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "b4e9488629",
+        "message": " Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=50325 Use JVM provided solutions to CVE-2009-3555 if available (i.e. RFC 5746 support)"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "58223c5ecc",
+        "message": " Prevent XSS in Manager application This addresses CVE-2011-0013"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "5971f9392e",
+        "message": " Fix CVE-2010-4172. Multiple XSS in Manager web application"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "a697f7b52c",
+        "message": " Ensure work dir attribute is made read-only CVE-2010-3718"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "e4b1187df3",
+        "message": " Return copies of the URL array rather than the original. This facilitated CVE-2010-1622 although the root cause was in the Spring Framework. Returning a copy in this case seems like a good idea."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "4e97b367a9",
+        "message": " Add CVE-2010-2227 test case"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "40e5880dfc",
+        "message": " Arrange filter logic. This is the fix for CVE-2010-2227."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "a4de93b2aa",
+        "message": " Fix CVE-2010-1157. Prevent possible disclosure of host name or IP address via the HTTP WWW-Authenticate header when using BASIC or DIGEST authentication."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "30af3f5630",
+        "message": " Improve workaround for CVE-2009-3555 On the plus side"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "cb8855a65c",
+        "message": " Fix CVE-2009-3548. When installing using defaults"
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "7c50fe16ea",
+        "message": " Fix XSS in examples web application. This is CVE-2009-0781. Security page updates and formal announcement to follow."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "6b61911f94",
+        "message": " Remove 3 of the essentially 4 duplicate normalise implementations. Minor tweaks where required to use the new single implementation. Remove unnecessary normalisation calls. This includes the fix for CVE-2008-5515."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "49c71fc59c",
+        "message": " Fix potential XSS in host-manager. This is CVE-2008-1947."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "52a88ae7a4",
+        "message": " Fix CVE-2007-5342. Limit JULI privs to just those required to prevent per web-app configurations having too many privs."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "901292cf9d",
+        "message": " Fix CVE-2007-5461."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "a3ba5062e0",
+        "message": " Fix XSS issues in snoop.jsp. This is CVE-2007-2449. Some of these are harder (impossible?) to exploit than others but doing all of them means there won't be another XSS issue to patch later. I also made a similar change for a couple of other JSPs that are in the harder/impossible? to exploit category."
+    },
+    {
+        "repo_name": ".\\tomcat\\",
+        "fix_commit_hash": "1bc3bcb284",
+        "message": " Fix XSS issue in Manager and Host Manager. This is CVE-2007-2450."
+    }
+]

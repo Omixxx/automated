@@ -4,21 +4,20 @@ import subprocess
 import sys
 import json
 
-KEYWORDS = ['CVE', 'fix security', 'security']
+KEYWORDS = ['CVE', 'fix security']
 GET_LOGS = 'git log --pretty=format:"%h, %s, %an ,%ae"'
 HASH_LINE_INDEX = 0
-GIT_LOG_LINE_INDEX = 1
+MESSAGE_LINE_INDEX = 1
 AUTHOR_LINE_INDEX = 2
 AUTHOR_EMAIL_LINE_INDEX = 3
 
 
 def generate_logs(repo_path):
     output = subprocess.run(
-        ['powershell.exe', f'cd {repo_path}; {GET_LOGS}'],
-        stdout=subprocess.PIPE,
+        ['powershell.exe', f'cd {repo_path}; {GET_LOGS}'], capture_output=True
     )
 
-    return output.stdout.splitlines()
+    return output.stdout.decode().splitlines()
 
 
 def is_valid_repo(repo_path) -> bool:
@@ -36,24 +35,26 @@ def is_valid_repo(repo_path) -> bool:
     return True
 
 
-def contains(line):
-
+def contains_keywords(line):
     for key in KEYWORDS:
-        return key in str(line)
+        if key in str(line):
+            return True
 
 
 def main(logs, repo_path):
     assert logs is not None
 
-    filtered_logs = list(filter(contains, logs))
-    output = list([])
+    filtered_logs = list(filter(contains_keywords, logs))
+    output = list()
 
     for line in filtered_logs:
         my_line = str(line).split(',')
 
         output.append(
             {
-                'repo_name': f'{repo_path},"fix_commit_hash": f"{my_line[HASH_LINE_INDEX]}'
+                'repo_name': f'{repo_path}',
+                'fix_commit_hash': f'{my_line[HASH_LINE_INDEX]}',
+                'message': f'{my_line[MESSAGE_LINE_INDEX]}',
             }
         )
     json_str = json.dumps(output, indent=4)
