@@ -12,8 +12,6 @@ AUTHOR_LINE_INDEX = 2
 AUTHOR_EMAIL_LINE_INDEX = 3
 
 
-
-
 def generate_logs(repo_path):
     output = subprocess.run(
         [ f'cd {repo_path}; {GET_LOGS}'], capture_output=True,shell=True
