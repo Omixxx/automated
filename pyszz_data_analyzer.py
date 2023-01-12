@@ -55,7 +55,7 @@ def identify_leading_security_vulnerabilities_developer(data_report, repo_path):
         introduced_vulnerability_number += 1
         dev_bugs.update({item[0]: introduced_vulnerability_number})
 
-    return dev_bugs
+    return dict(sorted(dev_bugs.items(), key=lambda item: item[1], reverse=True))
 
 
 def main(data_report, repo_path):
