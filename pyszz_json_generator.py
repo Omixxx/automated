@@ -54,7 +54,6 @@ def main(logs, repo_path):
             {
                 'repo_name': f'{repo_path}',
                 'fix_commit_hash': f'{my_line[HASH_LINE_INDEX]}',
-                'message': f'{my_line[MESSAGE_LINE_INDEX]}',
             }
         )
     json_str = json.dumps(output, indent=4)
