@@ -2,9 +2,10 @@ import sys
 import os
 import json
 import subprocess
+import
 
 
-def retrive_json_data(data_report):
+def calculate_fix_commit_percentage(data_report, repo_path):
     try:
         with open(data_report, 'r') as f:
             json_data = json.load(f)
@@ -12,11 +13,7 @@ def retrive_json_data(data_report):
         print(e)
         sys.exit(1)
     f.close()
-    return json_data
 
-
-def calculate_fix_commit_percentage(data_report, repo_path):
-    json_data = retrive_json_data(data_report)
     fix_commit = len(json_data)
     os.chdir(repo_path)
     total_commit = len(
@@ -28,9 +25,15 @@ def calculate_fix_commit_percentage(data_report, repo_path):
 
 
 def identify_leading_security_vulnerabilities_developer(data_report, repo_path):
-    leading_vulnerability_hashes = list()
-    json_data = retrive_json_data(data_report)
+    try:
+        with open(data_report, 'r') as f:
+            json_data = json.load(f)
+    except Exception as e:
+        print(e)
+        sys.exit(1)
+    f.close()
 
+    leading_vulnerability_hashes = list()
     for item in json_data:
         map(lambda entry: leading_vulnerability_hashes.extend(
             entry), item['inducing_commit_hash'])
@@ -47,11 +50,11 @@ def identify_leading_security_vulnerabilities_developer(data_report, repo_path):
 
 
 def main(data_report, repo_path):
-    print("Percentage of fix commit: ", calculate_fix_commit_percentage(
-        data_report, repo_path))
     print("Leading security vulnerabilities developer: ",
           identify_leading_security_vulnerabilities_developer(
               data_report, repo_path))
+    print("Percentage of fix commit: ", calculate_fix_commit_percentage(
+        data_report, repo_path))
 
 
 if __name__ == "__main__":
