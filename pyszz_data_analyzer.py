@@ -44,18 +44,18 @@ def identify_leading_security_vulnerabilities_developer(data_report, repo_path):
     commits_no_hash = list(
         map(lambda item: item.split(',')[1:], relevant_commits))
 
-    my_dict = dict()
+    dev_bugs = dict()
     for item in commits_no_hash:
-        if item[0] not in my_dict:
-            my_dict.update({item[0]: 1})
+        if item[0] not in dev_bugs:
+            dev_bugs.update({item[0]: 1})
             continue
 
-        introduced_vulnerability_number = my_dict.get(item[0])
+        introduced_vulnerability_number = dev_bugs.get(item[0])
         assert introduced_vulnerability_number is not None
         introduced_vulnerability_number += 1
-        my_dict.update({item[0]: introduced_vulnerability_number})
+        dev_bugs.update({item[0]: introduced_vulnerability_number})
 
-    return my_dict
+    return dev_bugs
 
 
 def main(data_report, repo_path):
