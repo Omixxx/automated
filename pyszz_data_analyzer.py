@@ -2,10 +2,9 @@ import sys
 import os
 import json
 import subprocess
-import
 
 
-def calculate_fix_commit_percentage(data_report, repo_path):
+def extract_data_from_json(data_report):
     try:
         with open(data_report, 'r') as f:
             json_data = json.load(f)
@@ -13,48 +12,62 @@ def calculate_fix_commit_percentage(data_report, repo_path):
         print(e)
         sys.exit(1)
     f.close()
+    return json_data
 
+
+def calculate_fix_commit_percentage(data_report, repo_path):
+    json_data = extract_data_from_json(data_report)
     fix_commit = len(json_data)
-    os.chdir(repo_path)
     total_commit = len(
         subprocess.run(
-            "git log --pretty=format:'%H'",
+            f"cd {repo_path} && git log --pretty=format:'%H'",
             shell=True,
             stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())
     return (fix_commit/total_commit)*100
 
 
 def identify_leading_security_vulnerabilities_developer(data_report, repo_path):
-    try:
-        with open(data_report, 'r') as f:
-            json_data = json.load(f)
-    except Exception as e:
-        print(e)
-        sys.exit(1)
-    f.close()
-
+    json_data = extract_data_from_json(data_report)
     leading_vulnerability_hashes = list()
-    for item in json_data:
-        map(lambda entry: leading_vulnerability_hashes.extend(
-            entry), item['inducing_commit_hash'])
-
-    os.chdir(repo_path)
+    for entry in json_data:
+        leading_vulnerability_hashes.extend(entry['inducing_commit_hash'])
 
     git_logs = subprocess.run(
-        "git log --pretty=format:'%H, %an, %ae'",
+        f"cd {repo_path} && git log --pretty=format:'%H, %an, %ae'",
         shell=True, capture_output=True
     ).stdout.decode(' utf-8').splitlines()
 
-    return list(filter(lambda item: item.split(
-        ',')[0] in leading_vulnerability_hashes, git_logs))
+    relevant_commits = list(
+        filter(lambda item: leading_vulnerability_hashes.__contains__(
+            item.split(',')[0]), git_logs))
+
+    commits_no_hash = list(
+        map(lambda item: item.split(',')[1:], relevant_commits))
+
+    my_dict = dict()
+    for item in commits_no_hash:
+        if item[0] not in my_dict:
+            my_dict.update({item[0]: 1})
+            continue
+
+        introduced_vulnerability_number = my_dict.get(item[0])
+        assert introduced_vulnerability_number is not None
+        introduced_vulnerability_number += 1
+        my_dict.update({item[0]: introduced_vulnerability_number})
+
+    return my_dict
 
 
 def main(data_report, repo_path):
-    print("Leading security vulnerabilities developer: ",
-          identify_leading_security_vulnerabilities_developer(
-              data_report, repo_path))
-    print("Percentage of fix commit: ", calculate_fix_commit_percentage(
-        data_report, repo_path))
+    print("Leading security vulnerabilities developer: ")
+    devs = identify_leading_security_vulnerabilities_developer(
+        data_report, repo_path)
+    for dev in devs:
+        print(f"{dev}: {devs.get(dev)}")
+
+    percentage = round(calculate_fix_commit_percentage(
+        data_report, repo_path), 2)
+    print(f"Percentage of fix commit: {percentage}%")
 
 
 if __name__ == "__main__":
