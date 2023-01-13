@@ -59,7 +59,7 @@ def identify_leading_security_vulnerabilities_developer(data_report, repo_path):
 
 
 def main(data_report, repo_path):
-    print("Leading security vulnerabilities developer: ")
+    print("Leading security vulnerabilities developer: \n dev ----- bugs")
     devs = identify_leading_security_vulnerabilities_developer(
         data_report, repo_path)
     for dev in devs:
