@@ -14,23 +14,21 @@ AUTHOR_EMAIL_LINE_INDEX = 3
 
 def generate_logs(repo_path):
     output = subprocess.run(
-        [f'cd {repo_path}; {GET_LOGS}'], capture_output=True, shell=True
+        [f'cd {repo_path} && {GET_LOGS}'], capture_output=True, shell=True
     )
 
     return output.stdout.decode().splitlines()
 
 
-def is_valid_repo(repo_path) -> bool:
+def validate_repo(repo_path):
 
     if not os.path.isdir(repo_path):
         print('not a path, please select a valid path')
-        return False
+        sys.exit(1)
 
     if not os.path.isdir(repo_path + os.sep + '.git'):
         print('this repository is not a git repo. please use this script on git projects')
-        return False
-
-    return True
+        sys.exit(1)
 
 
 def contains_keywords(line) -> bool:
@@ -67,10 +65,8 @@ if __name__ == '__main__':
     if len(sys.argv) != 2:
         print(
             'Usage: "python3 pyszz_json_generator.py [path_of_the_repository] "')
-        sys.exit(-1)
+        sys.exit(0)
 
     REPO_PATH = str(sys.argv[1])
-    if not is_valid_repo(REPO_PATH):
-        sys.exit(1)
-
+    validate_repo(REPO_PATH)
     main(generate_logs(REPO_PATH), REPO_PATH)
