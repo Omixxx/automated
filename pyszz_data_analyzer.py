@@ -2,6 +2,15 @@ import sys
 import os
 import json
 import subprocess
+from termcolor import colored
+from typing import Counter
+
+
+def get_git_raw_logs(repo_path, git_log_format):
+    return subprocess.run(
+        f"cd {repo_path} && git log --pretty=format:'{git_log_format}'",
+        shell=True, capture_output=True
+    ).stdout.decode(' utf-8').splitlines()
 
 
 def extract_data_from_json(data_report):
@@ -15,14 +24,15 @@ def extract_data_from_json(data_report):
     return json_data
 
 
+def most_commits_dev(repo_path):
+    git_logs = get_git_raw_logs(repo_path, '%an')
+    return Counter(git_logs).most_common(1)
+
+
 def calculate_fix_commit_percentage(data_report, repo_path):
     json_data = extract_data_from_json(data_report)
     fix_commit = len(json_data)
-    total_commit = len(
-        subprocess.run(
-            f"cd {repo_path} && git log --pretty=format:'%H'",
-            shell=True,
-            stdout=subprocess.PIPE).stdout.decode('utf-8').splitlines())
+    total_commit = get_git_raw_logs(repo_path, '%H').__len__()
     return (fix_commit/total_commit)*100
 
 
@@ -32,48 +42,46 @@ def identify_leading_security_vulnerabilities_developer(data_report, repo_path):
     for entry in json_data:
         leading_vulnerability_hashes.extend(entry['inducing_commit_hash'])
 
-    git_logs = subprocess.run(
-        f"cd {repo_path} && git log --pretty=format:'%H, %an, %ae'",
-        shell=True, capture_output=True
-    ).stdout.decode(' utf-8').splitlines()
-
-    relevant_commits = list(
+    git_logs = get_git_raw_logs(repo_path, '%H, %an, %ae')
+    relevant_logs = list(
         filter(lambda item: leading_vulnerability_hashes.__contains__(
             item.split(',')[0]), git_logs))
 
-    commits_no_hash = list(
-        map(lambda item: item.split(',')[1:], relevant_commits))
+    logs_no_hash = list(map(lambda item: item.split(',')[1:], relevant_logs))
 
-    dev_bugs = dict()
-    for item in commits_no_hash:
-        if item[0] not in dev_bugs:
-            dev_bugs.update({item[0]: 1})
-            continue
+    # make a list of tuples so that is now hashble and can be used in Counter
+    tuple_logs = list(
+        map(lambda item: (item[0], item[1].strip()), logs_no_hash))
 
-        introduced_vulnerability_number = dev_bugs.get(item[0])
-        assert introduced_vulnerability_number is not None
-        introduced_vulnerability_number += 1
-        dev_bugs.update({item[0]: introduced_vulnerability_number})
-
-    return dict(sorted(dev_bugs.items(), key=lambda item: item[1], reverse=True))
+    return Counter(tuple_logs).most_common()
 
 
 def main(data_report, repo_path):
-    print("Leading security vulnerabilities developer: \n dev ----- bugs")
+    print("# Leading security vulnerabilities developer:")
     devs = identify_leading_security_vulnerabilities_developer(
         data_report, repo_path)
     for dev in devs:
-        print(f"{dev}: {devs.get(dev)}")
+        print(colored(f" {dev[0][0]}", "yellow") + colored(f" ({dev[0][1]}) ",
+              "white") + colored(f"{dev[1]}", "red"))
 
     percentage = round(calculate_fix_commit_percentage(
         data_report, repo_path), 2)
-    print(f"Percentage of fix commit: {percentage}%")
+    print("\n# " + "Percentage of fix commit: " +
+          colored(f"{percentage}%", "green"))
+
+    commits = most_commits_dev(repo_path)
+    print(
+        "\n# Developer who did the most number of commits:\n  " +
+        colored(f"{commits[0][0]} ", "yellow") + "with " +
+        colored(f"{commits[0][1]} ", "blue") + "commits"
+    )
 
 
 if __name__ == "__main__":
 
     if len(sys.argv) != 3 or sys.argv[-1] == "-h":
-        print("usage: \npython3 pyszz_data_analyzer.py <path/to/pyszz/output.json>")
+        print(
+            "usage: \npython3 pyszz_data_analyzer.py [path/to/pyszz/output.json] [path/to/git/repo]")
         sys.exit(1)
     if not os.path.exists(sys.argv[2]
                           or not os.path.isdir(sys.argv[2])
