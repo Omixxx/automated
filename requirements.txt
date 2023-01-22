@@ -1,0 +1,5 @@
+dateparser==1.1.6
+GitPython==3.1.30
+PyDriller==1.15.2
+PyYAML==6.0
+termcolor==2.2.0
