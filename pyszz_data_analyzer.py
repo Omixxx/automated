@@ -26,7 +26,7 @@ def extract_data_from_json(data_report):
 
 def most_commits_dev(repo_path):
     git_logs = get_git_raw_logs(repo_path, '%an')
-    return Counter(git_logs).most_common(1)
+    return Counter(git_logs).most_common(2)
 
 
 def calculate_fix_commit_percentage(data_report, repo_path):
@@ -71,9 +71,12 @@ def main(data_report, repo_path):
 
     commits = most_commits_dev(repo_path)
     print(
-        "\n# Developer who did the most number of commits:\n  " +
+        "\n# Developers who did the most number of commits:\n  " +
         colored(f"{commits[0][0]} ", "yellow") + "with " +
-        colored(f"{commits[0][1]} ", "blue") + "commits"
+        colored(f"{commits[0][1]} ", "blue") + "commits\n  " +
+        colored(f"{commits[1][0]} ", "yellow") + "with " +
+        colored(f"{commits[1][1]} ", "blue") + "commits"
+
     )
 
 
