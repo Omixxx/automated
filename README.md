@@ -23,7 +23,7 @@ By default it generates entries in the following form:
 ```
 Where `"repo_name"` will be the name of the folder passed as input to the script. <br> 
 
-4. louch `pyszz` script from <a href=https://github.com/grosa1/pyszz >this repo</a> using the `data.json` provided by the `pyszz_json_generator.py` script. <br> 
+4. lounch `pyszz` script from <a href=https://github.com/grosa1/pyszz >this repo</a> using the `data.json` provided by the `pyszz_json_generator.py` script. <br> 
 
 5. finally use the following command to extract information from the pyszz output <br> 
 `python3 pyszz_data_analyzer.py pyszz/out/outuput.json path/to/project ` 
